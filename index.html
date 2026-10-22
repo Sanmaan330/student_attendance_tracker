@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f7fb">
+  <meta name="description" content="A simple dashboard to manage students and track class attendance.">
+  <title>Attendly | Student Attendance Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Attendly home">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>attendly<span class="brand-dot">.</span></span>
+      </a>
+      <p class="nav-label">WORKSPACE</p>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="dashboard"><span class="nav-icon">▦</span> Overview</button>
+        <button class="nav-link" data-view="students"><span class="nav-icon">♙</span> Students</button>
+        <button class="nav-link" data-view="attendance"><span class="nav-icon">✓</span> Attendance</button>
+        <button class="nav-link" data-view="reports"><span class="nav-icon">▤</span> Reports</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="tip-card">
+          <span class="tip-icon">✦</span>
+          <strong>Stay on track</strong>
+          <p>Consistent attendance builds stronger habits.</p>
+        </div>
+        <div class="profile">
+          <div class="avatar avatar-purple">T</div>
+          <div><strong>Teacher workspace</strong><span>Local device</span></div>
+          <span class="profile-more">···</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" aria-label="Toggle navigation">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <strong id="page-name">Overview</strong></div>
+        <div class="topbar-actions">
+          <span class="today-label" id="today-label"></span>
+          <span class="top-avatar">T</span>
+        </div>
+      </header>
+
+      <section class="view active" id="dashboard-view">
+        <div class="page-heading">
+          <div><p class="eyebrow">YOUR CLASS AT A GLANCE</p><h1>Good morning <span class="wave">✦</span></h1><p class="subheading">Here’s what’s happening with your students today.</p></div>
+          <button class="button button-primary" data-go="attendance"><span>＋</span> Take attendance</button>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-top"><span>Total students</span><span class="stat-icon icon-blue">♙</span></div>
+            <div class="stat-value" id="stat-total">0</div><div class="stat-note"><span class="dot dot-blue"></span> Active students</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Present today</span><span class="stat-icon icon-green">✓</span></div>
+            <div class="stat-value" id="stat-present">0</div><div class="stat-note"><span class="dot dot-green"></span> Marked present</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Absent today</span><span class="stat-icon icon-orange">↘</span></div>
+            <div class="stat-value" id="stat-absent">0</div><div class="stat-note"><span class="dot dot-orange"></span> Needs follow-up</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Attendance rate</span><span class="stat-icon icon-purple">％</span></div>
+            <div class="stat-value"><span id="stat-rate">0</span><small>%</small></div><div class="stat-note"><span class="dot dot-purple"></span> For selected date</div>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="panel attendance-panel">
+            <div class="panel-heading">
+              <div><h2>Attendance overview</h2><p>Daily class attendance status</p></div>
+              <label class="date-control"><span class="sr-only">Attendance date</span><input type="date" id="dashboard-date"></label>
+            </div>
+            <div class="chart-area">
+              <div class="donut-wrap"><div class="donut" id="attendance-donut"><div class="donut-center"><strong id="chart-rate">0%</strong><span>attendance</span></div></div></div>
+              <div class="chart-legend">
+                <div><span class="legend-dot present-dot"></span><span>Present</span><strong id="chart-present">0</strong></div>
+                <div><span class="legend-dot absent-dot"></span><span>Absent</span><strong id="chart-absent">0</strong></div>
+                <div><span class="legend-dot unmarked-dot"></span><span>Not marked</span><strong id="chart-unmarked">0</strong></div>
+              </div>
+            </div>
+            <div class="panel-footer"><span class="live-dot"></span> Updated for <strong id="chart-date-label"></strong></div>
+          </section>
+
+          <section class="panel quick-panel">
+            <div class="panel-heading"><div><h2>Quick actions</h2><p>Manage your classroom</p></div><span class="more-icon">···</span></div>
+            <button class="quick-action" data-go="students"><span class="quick-icon quick-blue">＋</span><span><strong>Add a student</strong><small>Create a student profile</small></span><span class="action-arrow">›</span></button>
+            <button class="quick-action" data-go="attendance"><span class="quick-icon quick-green">✓</span><span><strong>Mark attendance</strong><small>Record today’s attendance</small></span><span class="action-arrow">›</span></button>
+            <button class="quick-action" data-go="reports"><span class="quick-icon quick-purple">▤</span><span><strong>View reports</strong><small>Explore attendance insights</small></span><span class="action-arrow">›</span></button>
+            <div class="threshold-note"><span>ⓘ</span> Low attendance warning is set to <strong id="threshold-display">75%</strong><button id="threshold-edit" type="button">Change</button></div>
+          </section>
+        </div>
+
+        <section class="panel recent-panel">
+          <div class="panel-heading"><div><h2>Student attendance</h2><p>Attendance status for the selected date</p></div><button class="text-button" data-go="attendance">View all <span>→</span></button></div>
+          <div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>ROLL NUMBER</th><th>DEPARTMENT</th><th>ATTENDANCE</th><th>STATUS</th></tr></thead><tbody id="dashboard-student-list"></tbody></table></div>
+          <div class="empty-state compact-empty" id="dashboard-empty" hidden><span>♙</span><strong>No students yet</strong><p>Add your first student to get started.</p><button class="button button-primary button-small" data-go="students">Add a student</button></div>
+        </section>
+      </section>
+
+      <section class="view" id="students-view">
+        <div class="page-heading"><div><p class="eyebrow">YOUR CLASS ROSTER</p><h1>Students</h1><p class="subheading">Add and manage your student profiles.</p></div><button class="button button-primary" id="add-student"><span>＋</span> Add student</button></div>
+        <section class="panel roster-panel">
+          <div class="panel-heading roster-tools"><div><h2>All students <span class="count-pill" id="student-count">0</span></h2><p>Keep your class information up to date.</p></div><div class="filter-tools"><label class="search-field"><span>⌕</span><input id="student-search" type="search" placeholder="Search students..." aria-label="Search students"></label><select id="department-filter" aria-label="Filter by department"><option value="">All departments</option></select></div></div>
+          <div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>ROLL NUMBER</th><th>DEPARTMENT</th><th>SEMESTER</th><th>SECTION</th><th></th></tr></thead><tbody id="students-list"></tbody></table></div>
+          <div class="empty-state" id="students-empty" hidden><span>♙</span><strong>No students found</strong><p>Add a student or adjust your search and filters.</p><button class="button button-primary button-small" id="empty-add-student">Add a student</button></div>
+        </section>
+      </section>
+
+      <section class="view" id="attendance-view">
+        <div class="page-heading"><div><p class="eyebrow">DAILY CLASS RECORD</p><h1>Attendance</h1><p class="subheading">Mark each student present or absent for a date.</p></div><label class="date-control large-date"><span>ATTENDANCE DATE</span><input type="date" id="attendance-date"></label></div>
+        <section class="panel mark-panel">
+          <div class="attendance-toolbar"><div><h2>Class register <span class="count-pill" id="attendance-count">0</span></h2><p id="attendance-summary">Choose a status for each student.</p></div><div class="bulk-actions"><button class="button button-outline" id="mark-all-present">✓ Mark all present</button><button class="button button-outline" id="mark-all-absent">↘ Mark all absent</button><button class="button button-quiet" id="clear-attendance">Clear date</button></div></div>
+          <div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>ROLL NUMBER</th><th>DEPARTMENT</th><th>STATUS</th><th>MARK AS</th></tr></thead><tbody id="attendance-list"></tbody></table></div>
+          <div class="empty-state" id="attendance-empty" hidden><span>✓</span><strong>Your register is empty</strong><p>Add students before you start taking attendance.</p><button class="button button-primary button-small" data-go="students">Manage students</button></div>
+          <div class="attendance-footer"><span><span class="live-dot"></span> Changes are saved automatically on this device.</span><span id="attendance-tally"></span></div>
+        </section>
+      </section>
+
+      <section class="view" id="reports-view">
+        <div class="page-heading"><div><p class="eyebrow">CLASSROOM INSIGHTS</p><h1>Reports</h1><p class="subheading">Review attendance patterns and export your records.</p></div><button class="button button-primary" id="export-csv"><span>↓</span> Export CSV</button></div>
+        <div class="report-controls panel"><label>REPORT PERIOD<select id="report-period"><option value="month">This month</option><option value="all">All time</option></select></label><label>LOW ATTENDANCE LIMIT<div class="threshold-input"><input type="number" id="threshold-input" min="0" max="100" step="1"><span>%</span></div></label><div class="report-period-label" id="report-period-label"></div></div>
+        <div class="stats-grid report-stats">
+          <article class="stat-card"><div class="stat-top"><span>Class attendance</span><span class="stat-icon icon-purple">％</span></div><div class="stat-value"><span id="report-rate">0</span><small>%</small></div><div class="stat-note">Average attendance rate</div></article>
+          <article class="stat-card"><div class="stat-top"><span>Sessions recorded</span><span class="stat-icon icon-blue">▤</span></div><div class="stat-value" id="report-sessions">0</div><div class="stat-note">Dates with attendance marked</div></article>
+          <article class="stat-card"><div class="stat-top"><span>Students at risk</span><span class="stat-icon icon-orange">!</span></div><div class="stat-value" id="report-risk">0</div><div class="stat-note">Below your attendance limit</div></article>
+          <article class="stat-card"><div class="stat-top"><span>Records counted</span><span class="stat-icon icon-green">✓</span></div><div class="stat-value" id="report-records">0</div><div class="stat-note">Marked student sessions</div></article>
+        </div>
+        <section class="panel report-panel"><div class="panel-heading"><div><h2>Student attendance summary</h2><p>Overall attendance across the selected period</p></div></div><div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>ROLL NUMBER</th><th>PRESENT</th><th>ABSENT</th><th>ATTENDANCE RATE</th><th>STATUS</th></tr></thead><tbody id="report-list"></tbody></table></div><div class="empty-state" id="reports-empty" hidden><span>▤</span><strong>No attendance data yet</strong><p>Mark attendance to generate class reports.</p><button class="button button-primary button-small" data-go="attendance">Take attendance</button></div></section>
+      </section>
+
+      <footer class="app-footer"><span>Attendly <span class="brand-dot">·</span> Student Attendance Tracker</span><span>Data stays in this browser <span class="footer-lock">⌑</span></span></footer>
+    </main>
+  </div>
+
+  <dialog id="student-dialog" class="student-dialog">
+    <form id="student-form" method="dialog">
+      <div class="dialog-heading"><div><p class="eyebrow">STUDENT PROFILE</p><h2 id="dialog-title">Add student</h2></div><button class="dialog-close" type="button" id="close-dialog" aria-label="Close">×</button></div>
+      <input type="hidden" id="student-id">
+      <label>Full name<input id="student-name" name="name" required maxlength="80" autocomplete="name" placeholder="e.g. Aisha Patel"></label>
+      <label>Roll number<input id="student-roll" name="roll" required maxlength="30" placeholder="e.g. CS-024"></label>
+      <div class="form-row"><label>Department<input id="student-department" name="department" required maxlength="60" placeholder="e.g. Computer Science"></label><label>Semester<input id="student-semester" name="semester" required maxlength="30" placeholder="e.g. Semester 3"></label></div>
+      <label>Section<input id="student-section" name="section" required maxlength="30" placeholder="e.g. A"></label>
+      <p class="form-error" id="form-error" role="alert"></p>
+      <div class="dialog-actions"><button class="button button-quiet" type="button" id="cancel-dialog">Cancel</button><button class="button button-primary" type="submit" id="save-student">Save student</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

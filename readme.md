@@ -2,7 +2,7 @@
 
 A responsive web application for recording, managing, and reviewing student attendance. The project is being developed collaboratively using HTML, CSS, JavaScript, and GitHub.
 
-## Planned Features
+## Features
 
 - Dashboard with total students, present students, absent students, and attendance percentage
 - Add, edit, delete, search, and filter student records
@@ -25,7 +25,7 @@ A responsive web application for recording, managing, and reviewing student atte
 - `localStorage` for the first version of data persistence
 - Git and GitHub for version control and collaboration
 
-## Planned Project Structure
+## Project Structure
 
 ```text
 student_attendance_tracker/
@@ -33,24 +33,21 @@ student_attendance_tracker/
 ├── css/
 │   └── style.css
 ├── js/
-│   ├── app.js
-│   ├── students.js
-│   ├── attendance.js
-│   └── storage.js
-├── assets/
+│   ├── app.js          # UI rendering, navigation, forms, and reports
+│   ├── students.js     # Student record management
+│   ├── attendance.js  # Date-based attendance records
+│   └── storage.js     # Browser localStorage persistence
 └── readme.md
 ```
 
-## Development Phases
+## What’s Included
 
-1. Create the base page layout and navigation.
-2. Add the responsive visual design and reusable page sections.
-3. Implement student creation, editing, deletion, searching, and filtering.
-4. Implement date-based attendance marking and validation.
-5. Save and load records with `localStorage`.
-6. Add dashboard statistics and low-attendance indicators.
-7. Add reports, summaries, and CSV export.
-8. Test form validation, refresh persistence, duplicate records, empty states, and mobile layouts.
+- Dashboard with date-specific attendance totals and attendance rate
+- Student profiles with duplicate roll-number validation, search, and department filters
+- Date-wise attendance marking, bulk present/absent actions, and duplicate-safe updates
+- Attendance summaries for the current month or all recorded dates
+- Configurable low-attendance warnings and CSV report downloads
+- Responsive layout and clear empty, validation, and storage-error states
 
 ## Getting Started
 
@@ -61,7 +58,7 @@ student_attendance_tracker/
 	cd student_attendance_tracker
 	```
 
-2. Open `index.html` in a browser, or use the Live Server extension in VS Code.
+2. Open the project folder in VS Code and launch `index.html` with the Live Server extension. The app uses JavaScript modules, so serve it over HTTP instead of opening the file directly.
 
 3. Create a feature branch before making changes:
 
@@ -70,6 +67,8 @@ student_attendance_tracker/
 	git pull origin main
 	git checkout -b feature/your-feature-name
 	```
+
+Student and attendance data are saved in the browser’s `localStorage` on the device where the app is used. Data is not synchronized between collaborators or browsers; do not enter sensitive student information into a public demo.
 
 ## Collaboration Workflow
 
